@@ -38,7 +38,7 @@ export default function HomePage() {
       <main>
         <section className="container mx-auto px-5">
           {/* Hero Image */}
-          <div className="mb-8 md:mb-16 mt-8">
+          <div className="mb-8 md:mb-06 mt-8">
             <div className="relative w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden">
               <Image
                 src="/hero-lightbulbs.png"
@@ -50,19 +50,21 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="flex-col md:flex-row flex items-center md:justify-between mb-16 md:mb-12">
+          <div className="flex-col md:flex-row flex items-start md:justify-between mb-06 md:mb-02">
             <div className="md:w-1/2">
-              <div className="mb-4">
-                <span className="text-lg text-muted-foreground">Creative Outpatient Rehab</span>
-              </div>
-              <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 mb-6">
+              <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 mb-4 -mt-2">
                 GLASS HOUSE
               </h1>
-              <p className="text-lg leading-relaxed mb-6 max-w-2xl">
-                Build a new foundation through intensive self-development and evidence-based treatment.
-              </p>
-              <p className="text-xl font-semibold mb-8 max-w-2xl">
+              <div className="mb-0">
+                <span className="text-lg text-muted-foreground">Creative Outpatient Treatment</span>
+              </div>
+              <div className="mb-4"></div>
+              <p className="text-xl font-semibold mb-6 max-w-2xl">
                 Welcome to Glass House. Come as you are. Leave as yourself.
+              </p>
+              <p className="text-lg leading-relaxed mb-8 max-w-2xl">
+                Build a new foundation through intensive self-development{" "}
+                and evidence-based treatment.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button size="lg" className="text-lg px-8 py-6" asChild>
@@ -209,7 +211,7 @@ export default function HomePage() {
                   <div className="flex items-start space-x-4">
                     <Phone className="w-6 h-6 text-primary mt-1" />
                     <div>
-                      <h3 className="font-semibold mb-1">Phone</h3>
+                      <h3 className="font-semibold mb-0">Phone</h3>
                       <p className="text-muted-foreground">
                         <a href="tel:4109703374" className="hover:underline">410.970.3374</a>
                       </p>
@@ -219,7 +221,7 @@ export default function HomePage() {
                   <div className="flex items-start space-x-4">
                     <Mail className="w-6 h-6 text-primary mt-1" />
                     <div>
-                      <h3 className="font-semibold mb-1">Email</h3>
+                      <h3 className="font-semibold mb-0">Email</h3>
                       <p className="text-muted-foreground">
                         <a href="mailto:admissions@glasshouserecovery.com" className="hover:underline">
                           admissions@glasshouserecovery.com
@@ -231,7 +233,7 @@ export default function HomePage() {
                   <div className="flex items-start space-x-4">
                     <MapPin className="w-6 h-6 text-primary mt-1" />
                     <div>
-                      <h3 className="font-semibold mb-1">Location</h3>
+                      <h3 className="font-semibold mb-0">Location</h3>
                       <p className="text-muted-foreground">
                         Glass House Recovery<br />
                         8318 Forrest St<br />
@@ -260,7 +262,7 @@ export default function HomePage() {
         {/* Certifications Section */}
         <section className="py-16">
           <div className="container mx-auto px-5">
-            <div className="text-center mb-12">
+            <div className="text-center mb-02">
               <h2 className="text-3xl font-bold tracking-tighter mb-4">
                 Certified To Support Recovery
               </h2>
@@ -296,7 +298,7 @@ export default function HomePage() {
           <div className="py-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
               <div>
-                <h3 className="font-bold mb-2">Glass House Recovery</h3>
+                <h3 className="font-bold mb-0">Glass House Recovery</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <div className="flex items-start gap-2">
                     <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
