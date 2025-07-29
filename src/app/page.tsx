@@ -31,7 +31,7 @@ export default function HomePage() {
               <Link href="/programs" className="text-muted-foreground hover:text-foreground">Programs</Link>
               <Link href="/admissions" className="text-muted-foreground hover:text-foreground">Admissions</Link>
               <Link href="/referrals" className="text-muted-foreground hover:text-foreground">Referrals</Link>
-              <Link href="#contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
+              <Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
             </nav>
           </div>
         </div>
@@ -71,7 +71,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button size="lg" className="text-lg px-8 py-6" asChild>
-                  <a href="#contact">Contact Us</a>
+                  <a href="/contact">Contact Us</a>
                 </Button>
                 <Button variant="outline" size="lg" className="text-lg px-8 py-6" asChild>
                   <Link href="/programs">Our Programs</Link>
@@ -123,7 +123,7 @@ export default function HomePage() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button size="lg" asChild>
-                    <a href="#about">Read more about our philosophy</a>
+                    <Link href="/about">Read more about our philosophy</Link>
                   </Button>
                   <Button variant="outline" size="lg" asChild>
                     <Link href="/programs">PROGRAMS</Link>
@@ -145,7 +145,7 @@ export default function HomePage() {
                   Our approach to your journey works by discovering the person your pain took away from the world and bringing them back to life.
                 </h2>
                 <Button size="lg" asChild>
-                  <a href="#contact">Learn more about Glass House</a>
+                  <Link href="/about">Learn more about Glass House</Link>
                 </Button>
               </div>
               <div className="relative">
@@ -245,7 +245,7 @@ export default function HomePage() {
 
               <div className="text-center">
                 <Button className="mb-4" asChild>
-                  <a href="#contact">SUBSCRIBE TO NEWSLETTER</a>
+                  <a href="/contact">SUBSCRIBE TO NEWSLETTER</a>
                 </Button>
                 <div className="flex justify-center space-x-4 text-sm">
                   <a href="https://www.facebook.com/glasshouserecovery" className="text-muted-foreground hover:text-foreground">

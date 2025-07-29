@@ -29,7 +29,7 @@ export default function AboutPage() {
               <Link href="/programs" className="text-muted-foreground hover:text-foreground">Programs</Link>
               <Link href="/admissions" className="text-muted-foreground hover:text-foreground">Admissions</Link>
               <Link href="/referrals" className="text-muted-foreground hover:text-foreground">Referrals</Link>
-              <Link href="/#contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
+              <Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
             </nav>
           </div>
         </div>
@@ -159,7 +159,7 @@ export default function AboutPage() {
               </div>
               <div className="text-center">
                 <Button size="lg" className="text-lg px-8 py-6" asChild>
-                  <Link href="/#contact">Get In Touch</Link>
+                  <Link href="/contact">Get In Touch</Link>
                 </Button>
               </div>
             </div>
@@ -195,7 +195,7 @@ export default function AboutPage() {
               <div></div>
               <div className="text-center">
                 <Button className="mb-4" asChild>
-                  <Link href="/#contact">SUBSCRIBE TO NEWSLETTER</Link>
+                  <Link href="/contact">SUBSCRIBE TO NEWSLETTER</Link>
                 </Button>
                 <div className="flex justify-center space-x-4 text-sm">
                   <a href="https://www.facebook.com/glasshouserecovery" className="text-muted-foreground hover:text-foreground">

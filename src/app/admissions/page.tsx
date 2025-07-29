@@ -29,7 +29,7 @@ export default function AdmissionsPage() {
               <Link href="/programs" className="text-muted-foreground hover:text-foreground">Programs</Link>
               <Link href="/admissions" className="text-foreground">Admissions</Link>
               <Link href="/referrals" className="text-muted-foreground hover:text-foreground">Referrals</Link>
-              <Link href="/#contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
+              <Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
             </nav>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function AdmissionsPage() {
               </p>
 
               <p className="text-lg mb-6">
-                <strong>Admission begins with <Link href="/#contact" className="underline hover:no-underline">contacting us</Link>.</strong> We will do a pre-assessment to make sure our programs match what you are looking for, and if so, schedule intake as soon as possible. If not, we will provide you will referrals for a program that suits your needs.
+                <strong>Admission begins with <Link href="/contact" className="underline hover:no-underline">contacting us</Link>.</strong> We will do a pre-assessment to make sure our programs match what you are looking for, and if so, schedule intake as soon as possible. If not, we will provide you will referrals for a program that suits your needs.
               </p>
 
               <p className="text-lg mb-6">
@@ -84,7 +84,7 @@ export default function AdmissionsPage() {
               </p>
 
               <p className="text-lg mb-6">
-                <strong>Still have questions? We get it.</strong> This might be a big decision. <Link href="/#contact" className="underline hover:no-underline">Contact us</Link> to talk to the team, or check out the resources below.
+                <strong>Still have questions? We get it.</strong> This might be a big decision. <Link href="/contact" className="underline hover:no-underline">Contact us</Link> to talk to the team, or check out the resources below.
               </p>
 
               <div className="text-lg space-y-2">
@@ -116,7 +116,7 @@ export default function AdmissionsPage() {
               </p>
 
               <p className="text-lg mb-6">
-                <strong>Want to discuss further? <Link href="/#contact" className="underline hover:no-underline">Reach out</Link>.</strong> We are happy to talk through the specifics and provide as many options as possible.
+                <strong>Want to discuss further? <Link href="/contact" className="underline hover:no-underline">Reach out</Link>.</strong> We are happy to talk through the specifics and provide as many options as possible.
               </p>
             </div>
           </div>
@@ -133,7 +133,7 @@ export default function AdmissionsPage() {
                 Take the first step toward your recovery journey. Our compassionate team is here to help you every step of the way.
               </p>
               <Button size="lg" className="text-lg px-8 py-6" asChild>
-                <Link href="/#contact">Learn More About Our Process</Link>
+                <Link href="/contact">Learn More About Our Process</Link>
               </Button>
             </div>
           </div>
@@ -168,7 +168,7 @@ export default function AdmissionsPage() {
               <div></div>
               <div className="text-center">
                 <Button className="mb-4" asChild>
-                  <Link href="/#contact">SUBSCRIBE TO NEWSLETTER</Link>
+                  <Link href="/contact">SUBSCRIBE TO NEWSLETTER</Link>
                 </Button>
                 <div className="flex justify-center space-x-4 text-sm">
                   <a href="https://www.facebook.com/glasshouserecovery" className="text-muted-foreground hover:text-foreground">
