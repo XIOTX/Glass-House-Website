@@ -27,7 +27,7 @@ export default function AboutPage() {
             <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
               <Link href="/about" className="text-foreground">About</Link>
               <Link href="/programs" className="text-muted-foreground hover:text-foreground">Programs</Link>
-              <Link href="#" className="text-muted-foreground hover:text-foreground">Admissions</Link>
+              <Link href="/admissions" className="text-muted-foreground hover:text-foreground">Admissions</Link>
               <Link href="/#contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
             </nav>
           </div>

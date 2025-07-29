@@ -29,7 +29,7 @@ export default function HomePage() {
             <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
               <Link href="/about" className="text-muted-foreground hover:text-foreground">About</Link>
               <Link href="/programs" className="text-muted-foreground hover:text-foreground">Programs</Link>
-              <Link href="#admissions" className="text-muted-foreground hover:text-foreground">Admissions</Link>
+              <Link href="/admissions" className="text-muted-foreground hover:text-foreground">Admissions</Link>
               <Link href="#contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
             </nav>
           </div>
@@ -270,22 +270,31 @@ export default function HomePage() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-2 gap-8 max-w-lg mx-auto items-center">
+            <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto items-center">
               <div className="text-center">
                 <Image
-                  src="https://ext.same-assets.com/1711429588/3783907385.png"
+                  src="https://i.imgur.com/lL4zY6f.png"
                   alt="NAATP Foundation For Recovery Science and Education"
-                  width={150}
-                  height={173}
+                  width={120}
+                  height={120}
                   className="mx-auto"
                 />
               </div>
               <div className="text-center">
                 <Image
-                  src="https://ext.same-assets.com/1711429588/3879021310.png"
+                  src="https://i.imgur.com/vN3eoyx.png"
                   alt="Joint Commission Accreditation"
-                  width={150}
-                  height={150}
+                  width={120}
+                  height={120}
+                  className="mx-auto"
+                />
+              </div>
+              <div className="text-center">
+                <Image
+                  src="https://i.imgur.com/uVFI9sF.png"
+                  alt="Third Certification"
+                  width={120}
+                  height={120}
                   className="mx-auto"
                 />
               </div>
