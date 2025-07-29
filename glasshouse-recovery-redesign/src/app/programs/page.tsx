@@ -11,13 +11,15 @@ export default function ProgramsPage() {
         <div className="container mx-auto px-5">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-1">
-              <Image
-                src="/glass-house-logo.png"
-                alt="Glass House Recovery Logo"
-                width={40}
-                height={40}
-                className="h-10 w-auto"
-              />
+              <Link href="/">
+                <Image
+                  src="/glass-house-logo.png"
+                  alt="Glass House Recovery Logo"
+                  width={40}
+                  height={40}
+                  className="h-10 w-auto"
+                />
+              </Link>
               <Link href="/" className="text-2xl font-bold tracking-tighter">
                 Glass House
               </Link>
