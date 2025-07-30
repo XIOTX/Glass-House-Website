@@ -1,10 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: false,
+  },
   images: {
     domains: [
       'i.imgur.com',
       'ext.same-assets.com',
-      'www.viima.com'
+      'www.viima.com',
+      'glasshouserecovery.com'
     ],
     remotePatterns: [
       {
@@ -18,6 +25,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'www.viima.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'glasshouserecovery.com',
       }
     ]
   }

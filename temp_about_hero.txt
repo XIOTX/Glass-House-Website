@@ -1,0 +1,44 @@
+        <section className="container mx-auto px-5">
+          <div className="mb-8 md:mb-16 mt-8">
+            <div className="relative w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden">
+              <Image
+                src="https://glasshouserecovery.com/wp-content/uploads/2023/05/books.jpg"
+                alt="Books and warm lighting"
+                fill
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-black/40" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center text-white px-4 max-w-4xl">
+                  <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+                    It's never too late to see what you could have been.
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+EOF  
+cd /home/project && cd /home/project/glasshouse-recovery-redesign && cat > temp_about_hero.txt << 'EOF'
+        <section className="container mx-auto px-5">
+          <div className="mb-8 md:mb-16 mt-8">
+            <div className="relative w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden">
+              <Image
+                src="https://glasshouserecovery.com/wp-content/uploads/2023/05/books.jpg"
+                alt="Books and warm lighting"
+                fill
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-black/40" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center text-white px-4 max-w-4xl">
+                  <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+                    It's never too late to see what you could have been.
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
