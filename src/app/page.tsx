@@ -16,10 +16,9 @@ export default function HomePage() {
     const logoSections = document.querySelectorAll('.logo-layer:not(.logo-base)');
     const section = document.querySelector('.logo-reveal-section');
 
-    let isTransitioning = false;
+
 
     function updateLogoState(scrollProgress) {
-      if (isTransitioning) return;
 
       // Define overlapping ranges for each layer (0 to 1 progress)
       const layers = [
@@ -27,7 +26,7 @@ export default function HomePage() {
         { name: 'top-right', start: 0.2, end: 0.45 },
         { name: 'top-right-left', start: 0.4, end: 0.65 },
         { name: 'top-right-left-in', start: 0.6, end: 0.85 },
-        { name: 'full', start: 0.7, end: 0.95 }
+        { name: 'full', start: 0.7, end: 0.9 }
       ];
 
       // Update opacity for each layer based on scroll progress
@@ -82,54 +81,116 @@ export default function HomePage() {
         }
       });
 
-      // Update header visibility and handle completion
+      // Handle black section scrolling and header attachment
       const header = document.querySelector('header');
 
-      // Check if animation is complete
-      if (scrollProgress >= 0.96) {
+      if (scrollProgress >= 0.95) {
+        // Full logo sits longer, then start black section transition
+        const transitionRange = 0.25; // 0.95 to 1.2 range for much smoother control
+        const transitionProgress = Math.min(1, (scrollProgress - 0.95) / transitionRange);
+
+        if (transitionProgress <= 0.6) {
+          // Phase 1: Black section and header move together until header reaches top
+          const blackSectionOffset = transitionProgress * (5/3) * window.innerHeight;
+
+          container.style.transform = `translateY(-${blackSectionOffset}px)`;
+          container.style.position = 'fixed';
+          container.style.zIndex = '9999';
+          container.style.transition = 'none';
+
+          if (header) {
+            header.style.display = 'block';
+            header.style.position = 'fixed';
+            header.style.top = `${Math.max(0, window.innerHeight - blackSectionOffset)}px`;
+            header.style.left = '0';
+            header.style.right = '0';
+            header.style.width = '100%';
+            header.style.zIndex = '50';
+            header.style.transition = 'none';
+          }
+        } else {
+          // Phase 2: Header stuck at top, black section continues moving off screen
+          const extraProgress = (transitionProgress - 0.6) / 0.4;
+          const totalOffset = window.innerHeight + (extraProgress * window.innerHeight * 1.5);
+
+          container.style.transform = `translateY(-${totalOffset}px)`;
+          container.style.position = 'fixed';
+          container.style.zIndex = '9999';
+          container.style.transition = 'none';
+
+          if (header) {
+            header.style.display = 'block';
+            header.style.position = 'fixed';
+            header.style.top = '0px';
+            header.style.left = '0';
+            header.style.right = '0';
+            header.style.width = '100%';
+            header.style.zIndex = '50';
+            header.style.transition = 'none';
+          }
+
+          // Phase 3: Only when black section is completely off screen, enable normal page scrolling
+          if (transitionProgress >= 1) {
+            container.style.position = 'absolute';
+            container.style.top = `${section.offsetHeight - window.innerHeight * 3}px`;
+            container.style.transform = 'translateY(0px)';
+            container.style.zIndex = '-1';
+            container.style.visibility = 'hidden';
+
+            if (header) {
+              header.style.position = 'sticky';
+              header.style.zIndex = '50';
+            }
+          }
+        }
+
+        // Set animation complete state
         if (!animationComplete) {
-          isTransitioning = true;
-
-          // Show header and transition to main site
-          if (header) header.style.display = 'block';
-
-          setTimeout(() => {
-            setAnimationComplete(true);
-            container.classList.add('animation-complete');
-            section.classList.add('completed');
-
-            // Ensure smooth transition
-            container.style.position = 'relative';
-            container.style.zIndex = '1';
-
-            isTransitioning = false;
-          }, 1000);
+          setAnimationComplete(true);
+          container.classList.add('animation-complete');
+          section.classList.add('completed');
         }
       } else {
-        // Hide header during animation
-        if (header) header.style.display = 'none';
+        // During logo animation or scrolling back up - reset everything
+        container.style.transform = 'translateY(0px)';
+        container.style.position = 'fixed';
+        container.style.top = '0';
+        container.style.left = '0';
+        container.style.right = '0';
+        container.style.width = '100%';
+        container.style.height = '100vh';
+        container.style.zIndex = '9999';
+        container.style.visibility = 'visible';
+        container.style.transition = 'none';
 
+        // Hide header during logo animation
+        if (header) {
+          header.style.display = 'none';
+          header.style.position = 'sticky';
+          header.style.top = '0';
+          header.style.left = 'auto';
+          header.style.right = 'auto';
+          header.style.width = 'auto';
+          header.style.zIndex = '50';
+          header.style.transition = '';
+        }
+
+        // Reset animation state when scrolling back up
         if (animationComplete) {
           setAnimationComplete(false);
           container.classList.remove('animation-complete');
           section.classList.remove('completed');
-          container.style.position = 'fixed';
-          container.style.zIndex = '9999';
         }
       }
     }
 
     // Smooth scroll handling for continuous opacity control
     function handleScroll() {
-      if (isTransitioning) return;
-
       const scrollY = window.scrollY;
-      const sectionHeight = section?.offsetHeight || window.innerHeight * 6;
-      const scrollProgress = Math.min(1, Math.max(0, scrollY / sectionHeight));
+      const sectionHeight = section?.offsetHeight || window.innerHeight * 10;
+      const scrollProgress = Math.min(1.3, Math.max(0, scrollY / sectionHeight)); // Extended to 1.3 for full transition
 
-
-
-      // Pass continuous scroll progress for smooth opacity transitions
+      // Always update logo state for smooth continuous animation
       updateLogoState(scrollProgress);
     }
 
@@ -147,10 +208,29 @@ export default function HomePage() {
 
     window.addEventListener('scroll', requestTick);
 
-    // Initialize - hide all logo layers and header
+    // Initialize - set up proper initial state
     function initializeAnimation() {
       const header = document.querySelector('header');
-      if (header) header.style.display = 'none';
+      if (header) {
+        header.style.display = 'none';
+        header.style.position = 'sticky';
+        header.style.top = '0';
+        header.style.zIndex = '50';
+      }
+
+      // Lock page scrolling initially - only animation should control scroll
+      document.body.style.overflow = 'hidden';
+
+      // Ensure black container is properly positioned
+      container.style.position = 'fixed';
+      container.style.top = '0';
+      container.style.left = '0';
+      container.style.right = '0';
+      container.style.width = '100%';
+      container.style.height = '100vh';
+      container.style.zIndex = '9999';
+      container.style.visibility = 'visible';
+      container.style.transform = 'translateY(0px)';
 
       // Ensure all logo layers start completely hidden
       logoSections.forEach(layer => {
@@ -159,12 +239,13 @@ export default function HomePage() {
         layer.style.filter = 'blur(15px) brightness(0.1)';
       });
 
-      updateLogoState(0);
+      // Force initial scroll check
+      handleScroll();
     }
 
-    // Run initialization immediately and after a brief delay
+    // Run initialization immediately and after DOM is ready
     initializeAnimation();
-    setTimeout(initializeAnimation, 50);
+    setTimeout(initializeAnimation, 100);
 
     return () => {
       window.removeEventListener('scroll', requestTick);
@@ -176,14 +257,11 @@ export default function HomePage() {
       {/* Add CSS styles */}
       <style jsx>{`
         .logo-reveal-section {
-          height: 600vh;
+          height: 1000vh;
           position: relative;
         }
 
-        .logo-reveal-section.completed {
-          height: 100vh;
-          position: relative;
-        }
+
 
         .logo-reveal-container {
           position: fixed;
@@ -347,7 +425,7 @@ export default function HomePage() {
       </section>
 
       {/* Header */}
-      <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50" style={{display: animationComplete ? 'block' : 'none'}}>
+      <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50" style={{display: 'none'}}>
         <div className="container mx-auto px-5">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-1">
