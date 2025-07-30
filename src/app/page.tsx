@@ -9,45 +9,19 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 
 export default function HomePage() {
-  const [animationComplete, setAnimationComplete] = useState(false);
+  const [animationFinalized, setAnimationFinalized] = useState(false);
 
   useEffect(() => {
     const container = document.querySelector('.logo-reveal-container') as HTMLElement;
     const logoSections = document.querySelectorAll('.logo-layer:not(.logo-base)');
-    const section = document.querySelector('.logo-reveal-section') as HTMLElement;
+    const header = document.querySelector('header') as HTMLElement;
+    const main = document.querySelector('main') as HTMLElement;
+    const logoSection = document.querySelector('.logo-reveal-section') as HTMLElement;
 
-    // Track animation progress manually
     let animationProgress = 0;
-
-    // Function to set final logo state and lock it
-    function setFinalLogoState() {
-      const layers = [
-        { name: 'top' },
-        { name: 'top-right' },
-        { name: 'top-right-left' },
-        { name: 'top-right-left-in' },
-        { name: 'full' }
-      ];
-
-      // Set all layers to final state
-      layers.forEach(layer => {
-        const element = document.querySelector(`[data-section="${layer.name}"]`) as HTMLElement;
-        if (!element) return;
-
-        // Keep all layers visible and glowing for smooth final state
-        element.style.opacity = '1';
-        element.style.visibility = 'visible';
-        element.style.filter = 'blur(0px) brightness(1.2) drop-shadow(0 0 40px rgba(255, 255, 255, 0.8))';
-      });
-    }
+    let transitionStarted = false;
 
     function updateLogoState(scrollProgress: number) {
-      // Don't update logo state if animation is already complete
-      if (animationComplete) {
-        return;
-      }
-
-      // Define overlapping ranges for each layer (0 to 1 progress)
       const layers = [
         { name: 'top', start: 0.05, end: 0.25 },
         { name: 'top-right', start: 0.2, end: 0.45 },
@@ -56,7 +30,6 @@ export default function HomePage() {
         { name: 'full', start: 0.7, end: 0.9 }
       ];
 
-      // Update opacity for each layer based on scroll progress
       layers.forEach(layer => {
         const element = document.querySelector(`[data-section="${layer.name}"]`) as HTMLElement;
         if (!element) return;
@@ -64,36 +37,24 @@ export default function HomePage() {
         let opacity = 0;
 
         if (scrollProgress >= layer.start && scrollProgress <= layer.end) {
-          // Calculate smooth opacity within this layer's range
           const layerProgress = (scrollProgress - layer.start) / (layer.end - layer.start);
           opacity = Math.min(1, Math.max(0, layerProgress));
         } else if (scrollProgress > layer.end) {
-          // Fully visible if past the end
           opacity = 1;
         }
 
-        // Apply smooth opacity and effects
         element.style.opacity = opacity.toString();
+        element.style.visibility = opacity === 0 ? 'hidden' : 'visible';
 
-        // Force hide if opacity should be 0
-        if (opacity === 0) {
-          element.style.visibility = 'hidden';
-        } else {
-          element.style.visibility = 'visible';
-        }
-
-        // Apply effects - keep blur until final full logo
         if (opacity > 0) {
           let blurAmount, brightness;
 
           if (layer.name === 'full') {
-            // Slower, more gradual unblurring for final logo
-            const blurProgress = Math.pow(opacity, 1.8); // Much slower curve
-            blurAmount = (1 - blurProgress) * 15; // Start more blurred
+            const blurProgress = Math.pow(opacity, 1.8);
+            blurAmount = (1 - blurProgress) * 15;
             brightness = 0.3 + (blurProgress * 1.2);
           } else {
-            // All other layers stay blurred but get brighter
-            blurAmount = 12; // Keep consistent blur
+            blurAmount = 12;
             brightness = 0.2 + (opacity * 0.6);
           }
 
@@ -106,231 +67,235 @@ export default function HomePage() {
         }
       });
 
-      // Handle black section scrolling and header attachment
-      const header = document.querySelector('header') as HTMLElement;
+      // Start transition only once when logo is complete
+      if (scrollProgress >= 0.9 && !transitionStarted) {
+        transitionStarted = true;
+        startHeaderTransition();
+      }
+    }
 
-      if (scrollProgress >= 0.95) {
-        // Full logo sits longer, then start black section transition
-        const transitionRange = 0.25; // 0.95 to 1.2 range for much smoother control
-        const transitionProgress = Math.min(1, (scrollProgress - 0.95) / transitionRange);
+    function startHeaderTransition() {
+      // Show main content immediately when transition starts
+      if (main) {
+        main.style.visibility = 'visible';
+        main.style.position = 'relative';
+        main.style.zIndex = '1';
+      }
 
-        if (transitionProgress <= 0.6) {
-          // Phase 1: Black section and header move together until header reaches top
-          const blackSectionOffset = transitionProgress * (5/3) * window.innerHeight;
+      // Show header at bottom to start sliding up
+      if (header) {
+        header.style.display = 'block';
+        header.style.position = 'fixed';
+        header.style.top = `${window.innerHeight}px`; // Start below viewport
+        header.style.left = '0';
+        header.style.right = '0';
+        header.style.width = '100%';
+        header.style.zIndex = '100';
+      }
 
-          if (container) {
-            container.style.transform = `translateY(-${blackSectionOffset}px)`;
-            container.style.position = 'fixed';
-            container.style.zIndex = '9999';
-            container.style.transition = 'none';
-          }
+      // Animate header sliding up and container sliding up
+      let progress = 0;
+      const duration = 1000; // 1 second transition
+      const startTime = Date.now();
 
-          if (header) {
-            header.style.display = 'block';
-            header.style.position = 'fixed';
-            header.style.top = `${Math.max(0, window.innerHeight - blackSectionOffset)}px`;
-            header.style.left = '0';
-            header.style.right = '0';
-            header.style.width = '100%';
-            header.style.zIndex = '50';
-            header.style.transition = 'none';
-          }
+      function animateTransition() {
+        const elapsed = Date.now() - startTime;
+        progress = Math.min(1, elapsed / duration);
+
+        if (container) {
+          const containerOffset = progress * window.innerHeight;
+          container.style.transform = `translateY(-${containerOffset}px)`;
+        }
+
+        if (header) {
+          const headerTop = window.innerHeight - (progress * window.innerHeight);
+          header.style.top = `${Math.max(0, headerTop)}px`;
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(animateTransition);
         } else {
-          // Phase 2: Header stuck at top, black section continues moving off screen
-          const extraProgress = (transitionProgress - 0.6) / 0.4;
-          const totalOffset = window.innerHeight + (extraProgress * window.innerHeight * 1.5);
+          // Transition complete
+          setAnimationFinalized(true);
 
+          // Hide animation elements
           if (container) {
-            container.style.transform = `translateY(-${totalOffset}px)`;
-            container.style.position = 'fixed';
-            container.style.zIndex = '9999';
-            container.style.transition = 'none';
+            container.style.display = 'none';
+          }
+          if (logoSection) {
+            logoSection.style.display = 'none';
           }
 
+          // Set header to fixed at top
           if (header) {
-            header.style.display = 'block';
             header.style.position = 'fixed';
             header.style.top = '0px';
-            header.style.left = '0';
-            header.style.right = '0';
-            header.style.width = '100%';
             header.style.zIndex = '50';
-            header.style.transition = 'none';
           }
 
-          // Phase 3: Only when black section is completely off screen, enable normal page scrolling
-          if (transitionProgress >= 1) {
-            if (container && section) {
-              container.style.position = 'absolute';
-              container.style.top = `${section.offsetHeight - window.innerHeight * 3}px`;
-              container.style.transform = 'translateY(0px)';
-              container.style.zIndex = '-1';
-              container.style.visibility = 'hidden';
-            }
-
-            if (header) {
-              header.style.position = 'sticky';
-              header.style.zIndex = '50';
-            }
-
-            // Enable normal scrolling only after animation completes
-            document.body.style.overflow = 'auto';
-            document.documentElement.style.overflow = 'auto';
+          // Position main content below header
+          if (main) {
+            main.style.marginTop = '64px';
+            main.style.position = 'static';
           }
-        }
 
-        // Set animation complete state
-        if (!animationComplete) {
-          setAnimationComplete(true);
-          container?.classList.add('animation-complete');
-          section?.classList.add('completed');
+          // Allow normal scrolling
+          document.body.style.overflow = 'auto';
+          document.documentElement.style.overflow = 'auto';
+          window.removeEventListener('wheel', handleWheel);
 
-          // Enable scroll after animation completes
-          setTimeout(() => {
-            document.body.style.overflow = 'auto';
-            document.documentElement.style.overflow = 'auto';
-            // Remove wheel handler but keep reference for re-adding
-            window.removeEventListener('wheel', handleWheel);
-          }, 200);
-        }
-      } else {
-        // During logo animation or scrolling back up - reset everything
-        if (container) {
-          container.style.transform = 'translateY(0px)';
-          container.style.position = 'fixed';
-          container.style.top = '0';
-          container.style.left = '0';
-          container.style.right = '0';
-          container.style.width = '100%';
-          container.style.height = '100vh';
-          container.style.zIndex = '9999';
-          container.style.visibility = 'visible';
-          container.style.transition = 'none';
-        }
-
-        // Hide header during logo animation
-        if (header) {
-          header.style.display = 'none';
-          header.style.position = 'sticky';
-          header.style.top = '0';
-          header.style.left = 'auto';
-          header.style.right = 'auto';
-          header.style.width = 'auto';
-          header.style.zIndex = '50';
-          header.style.transition = '';
-        }
-
-        // Reset animation state when scrolling back up
-        if (animationComplete && scrollProgress < 0.8) {
-          setAnimationComplete(false);
-          container?.classList.remove('animation-complete');
-          section?.classList.remove('completed');
-          animationProgress = 0; // Reset progress
-
-          // Re-enable wheel control and lock scroll
-          document.body.style.overflow = 'hidden';
-          document.documentElement.style.overflow = 'hidden';
-          window.addEventListener('wheel', handleWheel, { passive: false });
-
-          // Reset all logo layers
-          logoSections.forEach(layer => {
-            const layerElement = layer as HTMLElement;
-            layerElement.style.opacity = '0';
-            layerElement.style.visibility = 'hidden';
-            layerElement.style.filter = 'blur(15px) brightness(0.1)';
-          });
+          // Set up scroll listener for reset - only when truly at top
+          window.addEventListener('scroll', handleScrollForReset);
         }
       }
+
+      requestAnimationFrame(animateTransition);
     }
 
-    // Smooth scroll handling for continuous opacity control (used after animation completes)
-    function handleScroll() {
-      // Allow scroll-based animation reset when scrolling back up
-      if (animationComplete) {
-        const scrollY = window.scrollY;
-        const sectionHeight = section?.offsetHeight || window.innerHeight * 4;
-        const scrollProgress = Math.min(1.2, Math.max(0, scrollY / sectionHeight));
-
-        // Reset animation if scrolled back to top
-        if (scrollProgress < 0.1) {
-          setAnimationComplete(false);
-          container?.classList.remove('animation-complete');
-          section?.classList.remove('completed');
-          animationProgress = 0;
-
-          // Re-enable wheel control and lock scroll
-          document.body.style.overflow = 'hidden';
-          document.documentElement.style.overflow = 'hidden';
-          window.addEventListener('wheel', handleWheel, { passive: false });
-
-          // Reset all logo layers
-          logoSections.forEach(layer => {
-            const layerElement = layer as HTMLElement;
-            layerElement.style.opacity = '0';
-            layerElement.style.visibility = 'hidden';
-            layerElement.style.filter = 'blur(15px) brightness(0.1)';
-          });
-        }
-        return;
-      }
-
-      const scrollY = window.scrollY;
-      const sectionHeight = section?.offsetHeight || window.innerHeight * 4;
-      const scrollProgress = Math.min(1.2, Math.max(0, scrollY / sectionHeight)); // Extended to 1.2 for full transition
-
-      // Only update logo state during manual animation
-      updateLogoState(scrollProgress);
-    }
-
-    // Throttled scroll for better performance
-    let ticking = false;
-    function requestTick() {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }
-
-    // Handle wheel events to control animation
     function handleWheel(e: WheelEvent) {
-      if (animationComplete) {
-        // Allow normal scrolling when animation is complete
-        return;
-      }
+      if (transitionStarted) return; // Don't handle wheel during transition
 
       e.preventDefault();
 
-      // Update animation progress based on wheel delta
       const delta = e.deltaY;
-      const progressIncrement = delta / (window.innerHeight * 2); // Adjust sensitivity
+      const progressIncrement = delta / (window.innerHeight * 1.8);
 
-      animationProgress = Math.max(0, Math.min(1.2, animationProgress + progressIncrement));
-
-      // Update logo state based on manual progress
+      animationProgress = Math.max(0, Math.min(1.05, animationProgress + progressIncrement));
       updateLogoState(animationProgress);
     }
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    window.addEventListener('scroll', requestTick);
+    function handleScrollForReset() {
+      // Only trigger reset when actually at the very top AND user scrolls up
+      if (window.scrollY === 0) {
+        let hasSetupWheelListener = false;
 
-    // Initialize - set up proper initial state
-    function initializeAnimation() {
-      const header = document.querySelector('header') as HTMLElement;
-      if (header) {
-        header.style.display = 'none';
-        header.style.position = 'sticky';
-        header.style.top = '0';
-        header.style.zIndex = '50';
+        function handleWheelForReset(e: WheelEvent) {
+          if (e.deltaY < 0) { // Only on scroll up
+            e.preventDefault();
+
+            // Clean up listener first
+            window.removeEventListener('wheel', handleWheelForReset);
+            window.removeEventListener('scroll', handleScrollForReset);
+
+            // Start reverse transition
+            startReverseAnimation();
+          }
+        }
+
+        if (!hasSetupWheelListener) {
+          hasSetupWheelListener = true;
+          window.addEventListener('wheel', handleWheelForReset, { passive: false });
+
+          // Clean up wheel listener if user scrolls down
+          function handleScrollAway() {
+            if (window.scrollY > 0) {
+              window.removeEventListener('wheel', handleWheelForReset);
+              window.removeEventListener('scroll', handleScrollAway);
+              hasSetupWheelListener = false;
+            }
+          }
+          window.addEventListener('scroll', handleScrollAway);
+        }
+      }
+    }
+
+    function startReverseAnimation() {
+      setAnimationFinalized(false);
+      transitionStarted = false;
+      animationProgress = 0;
+
+      // Hide main content during reverse
+      if (main) {
+        main.style.visibility = 'hidden';
+        main.style.marginTop = '0';
       }
 
-      // Lock page scrolling initially - animation controls scroll
+      // Show animation elements
+      if (container) {
+        container.style.display = 'flex';
+        container.style.position = 'fixed';
+        container.style.top = '0';
+        container.style.left = '0';
+        container.style.right = '0';
+        container.style.width = '100%';
+        container.style.height = '100vh';
+        container.style.zIndex = '9999';
+        container.style.transform = `translateY(-${window.innerHeight}px)`; // Start pushed up
+      }
+
+      if (logoSection) {
+        logoSection.style.display = 'block';
+      }
+
+      // Disable scrolling
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
 
-      // Ensure black container is properly positioned
+      // Animate reverse transition
+      let progress = 1;
+      const duration = 800;
+      const startTime = Date.now();
+
+      function animateReverse() {
+        const elapsed = Date.now() - startTime;
+        progress = Math.max(0, 1 - (elapsed / duration));
+
+        if (header) {
+          const headerTop = window.innerHeight - (progress * window.innerHeight);
+          header.style.top = `${headerTop}px`;
+        }
+
+        if (container) {
+          const containerOffset = progress * window.innerHeight;
+          container.style.transform = `translateY(-${containerOffset}px)`;
+        }
+
+        if (progress > 0) {
+          requestAnimationFrame(animateReverse);
+        } else {
+          // Reverse complete - reset to beginning
+          if (container) {
+            container.style.transform = 'translateY(0px)';
+          }
+
+          if (header) {
+            header.style.display = 'none';
+          }
+
+          // Reset logo layers to beginning state
+          logoSections.forEach(layer => {
+            const layerElement = layer as HTMLElement;
+            layerElement.style.opacity = '0';
+            layerElement.style.visibility = 'hidden';
+            layerElement.style.filter = 'blur(15px) brightness(0.1)';
+          });
+
+          // Re-enable wheel listener for animation
+          window.addEventListener('wheel', handleWheel, { passive: false });
+        }
+      }
+
+      requestAnimationFrame(animateReverse);
+    }
+
+    function initializeAnimation() {
+      animationProgress = 0;
+      transitionStarted = false;
+
+      if (header) {
+        header.style.display = 'none';
+      }
+
+      // Initially hide main content
+      if (main) {
+        main.style.visibility = 'hidden';
+        main.style.marginTop = '0';
+        main.style.paddingTop = '0';
+      }
+
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+
       if (container) {
         container.style.position = 'fixed';
         container.style.top = '0';
@@ -341,9 +306,13 @@ export default function HomePage() {
         container.style.zIndex = '9999';
         container.style.visibility = 'visible';
         container.style.transform = 'translateY(0px)';
+        container.style.display = 'flex';
       }
 
-      // Start with all layers hidden for scroll animation
+      if (logoSection) {
+        logoSection.style.display = 'block';
+      }
+
       logoSections.forEach(layer => {
         const layerElement = layer as HTMLElement;
         layerElement.style.opacity = '0';
@@ -351,36 +320,24 @@ export default function HomePage() {
         layerElement.style.filter = 'blur(15px) brightness(0.1)';
       });
 
-      // Force initial scroll check
-      handleScroll();
+      updateLogoState(0);
     }
 
-    // Reset animation when page becomes visible (tab switching)
-    function handleVisibilityChange() {
-      if (!document.hidden && animationComplete) {
-        setAnimationComplete(false);
-        animationProgress = 0;
-        initializeAnimation();
-      }
+    if (!animationFinalized) {
+      window.addEventListener('wheel', handleWheel, { passive: false });
+      initializeAnimation();
+    } else {
+      window.addEventListener('scroll', handleScrollForReset);
     }
-
-    // Run initialization immediately and after DOM is ready
-    initializeAnimation();
-    setTimeout(initializeAnimation, 100);
-
-    // Add visibility change listener for tab switching
-    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
-      window.removeEventListener('scroll', requestTick);
       window.removeEventListener('wheel', handleWheel);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('scroll', handleScrollForReset);
     };
-  }, [animationComplete]);
+  }, [animationFinalized]);
 
   return (
     <div className="min-h-screen">
-      {/* Add CSS styles */}
       <style jsx>{`
         .logo-reveal-section {
           height: 400vh;
@@ -398,11 +355,6 @@ export default function HomePage() {
           align-items: center;
           justify-content: center;
           z-index: 9999;
-        }
-
-        .logo-reveal-container.animation-complete {
-          position: relative;
-          z-index: 1;
         }
 
         .logo-container {
@@ -428,25 +380,11 @@ export default function HomePage() {
           z-index: 1;
         }
 
-        .logo-top {
-          z-index: 2;
-        }
-
-        .logo-top-right {
-          z-index: 3;
-        }
-
-        .logo-top-right-left {
-          z-index: 4;
-        }
-
-        .logo-top-right-left-in {
-          z-index: 5;
-        }
-
-        .logo-full {
-          z-index: 6;
-        }
+        .logo-top { z-index: 2; }
+        .logo-top-right { z-index: 3; }
+        .logo-top-right-left { z-index: 4; }
+        .logo-top-right-left-in { z-index: 5; }
+        .logo-full { z-index: 6; }
 
         .logo-layer:not(.logo-base) {
           opacity: 0;
@@ -480,12 +418,9 @@ export default function HomePage() {
         }
       `}</style>
 
-      {/* Animated Logo Reveal Section */}
       <section className="logo-reveal-section">
         <div className="logo-reveal-container">
-          {/* Logo layers container */}
           <div className="logo-container">
-            {/* Base full logo - always visible but dimmed */}
             <div className="logo-layer logo-base floating">
               <Image
                 src="/ghwt.png"
@@ -496,7 +431,6 @@ export default function HomePage() {
               />
             </div>
 
-            {/* Cumulative sections */}
             <div className="logo-layer logo-top floating" data-section="top">
               <Image
                 src="/logo-top.png"
@@ -533,7 +467,6 @@ export default function HomePage() {
               />
             </div>
 
-            {/* Full logo for final reveal */}
             <div className="logo-layer logo-full floating" data-section="full">
               <Image
                 src="/ghwt.png"
@@ -546,8 +479,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Header */}
-      <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50" style={{display: 'none'}}>
+      <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-16" style={{display: 'none'}}>
         <div className="container mx-auto px-5">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-1">
@@ -575,10 +507,8 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Hero Section with Image */}
       <main>
         <section className="container mx-auto px-5">
-          {/* Hero Image */}
           <div className="mb-8 md:mb-06 mt-8">
             <div className="relative w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden">
               <Image
@@ -617,7 +547,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Contact Form */}
             <div className="md:w-1/2 mt-12 md:mt-0 md:pl-8">
               <ContactForm
                 title="Ready For A Change?"
@@ -628,7 +557,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Writing a New Chapter Section */}
         <section className="py-20">
           <div className="container mx-auto px-5">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -649,7 +577,7 @@ export default function HomePage() {
                   Breaking free from unhealthy patterns may seem an impossible task. Trapped in a self-imposed prison is a life no one wants to endure.
                 </p>
                 <p className="text-lg text-muted-foreground mb-6">
-                  At Glass House, our programs are designed to help those struggling to <strong>create a new future</strong>. We recognize the spark within and do more than just provide instruction on how to quit behaviors.
+                  At Glass House, our programs are designed to help those struggling to <strong>create a new future</strong>. We recognize the spark within and do more than just provide instruction on how quit behaviors.
                 </p>
                 <p className="text-lg text-muted-foreground mb-6">
                   We address trauma, help develop tools and skills, provide a refreshing and comfortable environment, and use evidence-based therapies coupled with a creative perspective to deliver treatment that brings individuals back to life.
@@ -670,7 +598,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Our Approach Section */}
         <section id="about" className="py-20">
           <div className="container mx-auto px-5">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -706,7 +633,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Certifications Section */}
         <section className="py-16">
           <div className="container mx-auto px-5">
             <div className="text-center mb-02">
@@ -748,7 +674,6 @@ export default function HomePage() {
         </section>
       </main>
 
-      {/* Footer */}
       <footer className="bg-background">
         <div className="container mx-auto px-5">
           <div className="py-6">
