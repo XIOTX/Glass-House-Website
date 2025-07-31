@@ -1,0 +1,18 @@
+          <div className="flex-col md:flex-row flex items-start md:justify-between mb-16 md:mb-12">
+            <div className="md:w-1/2 flex flex-col h-full">
+              <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 mb-4">
+                GLASS HOUSE
+              </h1>
+              <div className="mb-6">
+                <span className="text-lg text-muted-foreground">Creative Outpatient Treatment</span>
+              </div>
+EOF  
+cd /home/project && cd /home/project/glasshouse-recovery-redesign && cat > temp_replacement.txt << 'EOF'
+          <div className="flex-col md:flex-row flex items-start md:justify-between mb-16 md:mb-12">
+            <div className="md:w-1/2 flex flex-col h-full">
+              <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 mb-4">
+                GLASS HOUSE
+              </h1>
+              <div className="mb-6">
+                <span className="text-lg text-muted-foreground">Creative Outpatient Treatment</span>
+              </div>
