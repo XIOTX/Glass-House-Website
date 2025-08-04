@@ -30,6 +30,7 @@ export default function AdmissionsPage() {
               <Link href="/admissions" className="text-foreground">Admissions</Link>
               <Link href="/referrals" className="text-muted-foreground hover:text-foreground">Referrals</Link>
               <Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
+              <Link href="/newsletter" className="text-muted-foreground hover:text-foreground">Newsletter</Link>
             </nav>
           </div>
         </div>
@@ -168,13 +169,13 @@ export default function AdmissionsPage() {
                   <Link href="/contact">SUBSCRIBE TO NEWSLETTER</Link>
                 </Button>
                 <div className="flex justify-center space-x-4 text-sm">
-                  <a href="https://www.facebook.com/glasshouserecovery" className="text-muted-foreground hover:text-foreground">
+                  <a href="https://www.facebook.com/glasshouserecovery/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
                     Facebook
                   </a>
-                  <a href="https://www.instagram.com/glasshouserecovery/" className="text-muted-foreground hover:text-foreground">
+                  <a href="https://www.instagram.com/glasshouserecovery/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
                     Instagram
                   </a>
-                  <a href="https://www.linkedin.com/company/glasshouserecovery/" className="text-muted-foreground hover:text-foreground">
+                  <a href="https://www.linkedin.com/company/glasshouserecovery/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
                     LinkedIn
                   </a>
                 </div>

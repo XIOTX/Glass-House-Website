@@ -59,8 +59,8 @@ export default function HomePage() {
             brightness = 0.2 + (opacity * 0.6);
           }
 
-          const glowIntensity = 25 + (opacity * 5);
-          const glowOpacity = 0.4 + (opacity * 0.4);
+          const glowIntensity = 10;
+          const glowOpacity = 0.05;
 
           element.style.filter = `blur(${blurAmount}px) brightness(${brightness}) drop-shadow(0 0 ${glowIntensity}px rgba(255, 255, 255, ${glowOpacity}))`;
         } else {
@@ -75,6 +75,7 @@ export default function HomePage() {
         let brightness = 0.2; // Start dim like logo
         let glowIntensity = 30;
         let glowOpacity = 0.4;
+        let scale = 1.2; // Start zoomed in at 120%
 
         if (scrollProgress >= 0.05 && scrollProgress <= 0.9) {
           const bgProgress = (scrollProgress - 0.05) / (0.9 - 0.05); // Start with first logo layer at 0.05
@@ -85,16 +86,32 @@ export default function HomePage() {
           brightness = 0.2 + (bgProgress * 1.0); // Same brightness progression as logo
           glowIntensity = 30 + (bgProgress * 20); // Increase glow
           glowOpacity = 0.4 + (bgProgress * 0.4); // Increase glow opacity
-        } else if (scrollProgress > 0.9) {
+          
+          // Zoom from 120% to 100%
+          scale = 1.2 - (bgProgress * 0.2);
+        } else if (scrollProgress > 0.9 && scrollProgress <= 1.4) {
+          // During the "dead zone" - keep everything at final values except scale
           bgOpacity = 1.0;
-          blurAmount = 3;
+          blurAmount = 2;
           brightness = 1.2; // Final brightness like logo
           glowIntensity = 50;
           glowOpacity = 0.8;
+          
+          // Continue scale animation during dead zone
+          const scaleProgress = (scrollProgress - 0.9) / (1.4 - 0.9);
+          scale = 1.0 - (scaleProgress * 0.1); // Continue zooming from 100% to 90%
+        } else if (scrollProgress > 1.4) {
+          bgOpacity = 1.0;
+          blurAmount = 2;
+          brightness = 1.2; // Final brightness like logo
+          glowIntensity = 50;
+          glowOpacity = 0.8;
+          scale = 0.9; // Final scale at 90%
         }
 
         background.style.opacity = bgOpacity.toString();
         background.style.filter = `blur(${blurAmount}px) brightness(${brightness}) drop-shadow(0 0 ${glowIntensity}px rgba(255, 255, 255, ${glowOpacity}))`;
+        background.style.transform = `scale(${scale})`;
       }
 
       // Extended wait time - start transition at 1.4 to give much more time with fully lit logo
@@ -439,6 +456,7 @@ export default function HomePage() {
               <Link href="/admissions" className="text-muted-foreground hover:text-foreground">Admissions</Link>
               <Link href="/referrals" className="text-muted-foreground hover:text-foreground">Referrals</Link>
               <Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
+              <Link href="/newsletter" className="text-muted-foreground hover:text-foreground">Newsletter</Link>
             </nav>
           </div>
         </div>
@@ -638,20 +656,21 @@ export default function HomePage() {
                   <a href="/contact">SUBSCRIBE TO NEWSLETTER</a>
                 </Button>
                 <div className="flex justify-center space-x-4 text-sm">
-                  <a href="https://www.facebook.com/glasshouserecovery" className="text-muted-foreground hover:text-foreground">
+                  <a href="https://www.facebook.com/glasshouserecovery/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
                     Facebook
                   </a>
-                  <a href="https://www.instagram.com/glasshouserecovery/" className="text-muted-foreground hover:text-foreground">
+                  <a href="https://www.instagram.com/glasshouserecovery/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
                     Instagram
                   </a>
-                  <a href="https://www.linkedin.com/company/glasshouserecovery/" className="text-muted-foreground hover:text-foreground">
+                  <a href="https://www.linkedin.com/company/glasshouserecovery/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
                     LinkedIn
                   </a>
                 </div>
               </div>
             </div>
           </div>
-          <div className="py-3 text-center text-sm text-muted-foreground">
+          <div className="py-3 relative text-center text-sm text-muted-foreground">
+            <Link href="/privacy-policy" className="absolute left-0 hover:text-foreground">Privacy Policy</Link>
             <p>© 2025 Glass House</p>
           </div>
         </div>
