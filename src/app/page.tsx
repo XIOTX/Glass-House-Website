@@ -3,13 +3,14 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ContactForm } from "@/components/ContactForm"
-import { Phone, Mail, MapPin, Check, Hospital, Home, Calendar } from "lucide-react"
+import { Phone, Mail, MapPin, Check, Hospital, Home, Calendar, Menu, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
 export default function HomePage() {
   const [animationFinalized, setAnimationFinalized] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const container = document.querySelector('.logo-reveal-container') as HTMLElement;
@@ -450,6 +451,8 @@ export default function HomePage() {
                 Glass House
               </Link>
             </div>
+            
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
               <Link href="/about" className="text-muted-foreground hover:text-foreground">About</Link>
               <Link href="/programs" className="text-muted-foreground hover:text-foreground">Programs</Link>
@@ -458,14 +461,79 @@ export default function HomePage() {
               <Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
               <Link href="/newsletter" className="text-muted-foreground hover:text-foreground">Newsletter</Link>
             </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2 rounded-md hover:bg-accent"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle mobile menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
           </div>
+
+          {/* Mobile Navigation Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden absolute top-16 left-0 right-0 bg-background/95 backdrop-blur border-t border-border z-50">
+              <nav className="container mx-auto px-5 py-4">
+                <div className="flex flex-col space-y-4">
+                  <Link 
+                    href="/about" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    About
+                  </Link>
+                  <Link 
+                    href="/programs" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Programs
+                  </Link>
+                  <Link 
+                    href="/admissions" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Admissions
+                  </Link>
+                  <Link 
+                    href="/referrals" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Referrals
+                  </Link>
+                  <Link 
+                    href="/contact" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Contact
+                  </Link>
+                  <Link 
+                    href="/newsletter" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Newsletter
+                  </Link>
+                </div>
+              </nav>
+            </div>
+          )}
         </div>
       </header>
 
       <main>
         <section className="container mx-auto px-5">
-          <div className="mb-8 md:mb-06 mt-8">
-            <div className="relative w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden">
+          <div className="mb-6 md:mb-06 mt-6 md:mt-8">
+            <div className="relative w-full h-[300px] md:h-[500px] rounded-lg overflow-hidden">
               <Image
                 src="/hero-lightbulbs.png"
                 alt="Glass House Recovery"
@@ -476,27 +544,27 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="flex-col md:flex-row flex items-start md:justify-between mb-06 md:mb-02">
+          <div className="flex-col md:flex-row flex items-start md:justify-between mb-8 md:mb-02">
             <div className="md:w-1/2">
-              <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 mb-4 -mt-2">
+              <h1 className="text-4xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 mb-4 -mt-2">
                 GLASS HOUSE
               </h1>
               <div className="mb-0">
                 <span className="text-lg text-muted-foreground">Creative Outpatient Treatment</span>
               </div>
               <div className="mb-4"></div>
-              <p className="text-xl font-semibold mb-6 max-w-2xl">
+              <p className="text-lg md:text-xl font-semibold mb-4 md:mb-6 max-w-2xl">
                 Welcome to Glass House. Come as you are. Leave as yourself.
               </p>
-              <p className="text-lg leading-relaxed mb-8 max-w-2xl">
+              <p className="text-base md:text-lg leading-relaxed mb-6 md:mb-8 max-w-2xl">
                 Build a new foundation through intensive self-development{" "}
                 and evidence-based treatment.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="text-lg px-8 py-6" asChild>
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
+                <Button size="lg" className="text-base md:text-lg px-6 md:px-8 py-4 md:py-6 min-h-[44px]" asChild>
                   <a href="/contact">Contact Us</a>
                 </Button>
-                <Button variant="outline" size="lg" className="text-lg px-8 py-6" asChild>
+                <Button variant="outline" size="lg" className="text-base md:text-lg px-6 md:px-8 py-4 md:py-6 min-h-[44px]" asChild>
                   <Link href="/programs">Our Programs</Link>
                 </Button>
               </div>
@@ -507,9 +575,9 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="py-20">
+        <section className="py-12 md:py-20">
           <div className="container mx-auto px-5">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
               <div className="relative">
                 <Image
                   src="https://ext.same-assets.com/1711429588/1615094442.jpeg"
@@ -520,26 +588,26 @@ export default function HomePage() {
                 />
               </div>
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-6">
+                <h2 className="text-2xl md:text-4xl font-bold tracking-tighter mb-4 md:mb-6">
                   Is it time to write a new chapter?
                 </h2>
-                <p className="text-lg text-muted-foreground mb-6">
+                <p className="text-base md:text-lg text-muted-foreground mb-4 md:mb-6">
                   Breaking free from unhealthy patterns may seem an impossible task. Trapped in a self-imposed prison is a life no one wants to endure.
                 </p>
-                <p className="text-lg text-muted-foreground mb-6">
+                <p className="text-base md:text-lg text-muted-foreground mb-4 md:mb-6">
                   At Glass House, our programs are designed to help those struggling to <strong>create a new future</strong>. We recognize the spark within and do more than just provide instruction on how quit behaviors.
                 </p>
-                <p className="text-lg text-muted-foreground mb-6">
+                <p className="text-base md:text-lg text-muted-foreground mb-4 md:mb-6">
                   We address trauma, help develop tools and skills, provide a refreshing and comfortable environment, and use evidence-based therapies coupled with a creative perspective to deliver treatment that brings individuals back to life.
                 </p>
-                <p className="text-lg text-muted-foreground mb-8">
+                <p className="text-base md:text-lg text-muted-foreground mb-6 md:mb-8">
                   Our approach is built on experience and expertise. Our goal for our patients is a new freedom. Let us show you that a creative outpatient rehab can lead to long lasting recovery.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" asChild>
+                <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
+                  <Button size="lg" className="min-h-[44px]" asChild>
                     <Link href="/about">Read more about our philosophy</Link>
                   </Button>
-                  <Button variant="outline" size="lg" asChild>
+                  <Button variant="outline" size="lg" className="min-h-[44px]" asChild>
                     <Link href="/programs">Check out our Programs</Link>
                   </Button>
                 </div>
@@ -548,14 +616,14 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="about" className="py-20">
+        <section id="about" className="py-12 md:py-20">
           <div className="container mx-auto px-5">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-8">
+                <h2 className="text-2xl md:text-4xl font-bold tracking-tighter mb-6 md:mb-8">
                   Our approach to your journey works by discovering the person your pain took away from the world and bringing them back to life.
                 </h2>
-                <Button size="lg" asChild>
+                <Button size="lg" className="min-h-[44px]" asChild>
                   <Link href="/about">Learn more about Glass House</Link>
                 </Button>
               </div>
@@ -569,29 +637,29 @@ export default function HomePage() {
                 />
               </div>
             </div>
-            <div className="text-center max-w-4xl mx-auto mt-16">
-              <p className="text-lg text-muted-foreground mb-8">
+            <div className="text-center max-w-4xl mx-auto mt-10 md:mt-16">
+              <p className="text-base md:text-lg text-muted-foreground mb-6 md:mb-8">
                 <strong>Whether you've been in treatment before or this is your first time, our program was designed<br />to address the challenges keeping you from moving forward.</strong>
               </p>
-              <p className="text-lg text-muted-foreground mb-8">
+              <p className="text-base md:text-lg text-muted-foreground mb-6 md:mb-8">
                 <strong>Your time here will be spent immersing yourself in intensive group content calibrated<br />specifically for you. We believe that anyone is capable of finding a new way of life and creating <em>something</em> to give to the world in their own way.</strong>
               </p>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-base md:text-lg text-muted-foreground">
                 We will give you the tools to navigate life after active addiction<br />and build a life you no longer want to escape from.
               </p>
             </div>
           </div>
         </section>
 
-        <section className="py-16">
+        <section className="py-10 md:py-16">
           <div className="container mx-auto px-5">
             <div className="text-center mb-02">
-              <h2 className="text-3xl font-bold tracking-tighter mb-4">
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tighter mb-4">
                 Certified To Support Recovery
               </h2>
             </div>
 
-            <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto items-center">
+            <div className="grid grid-cols-3 gap-4 md:gap-6 max-w-2xl mx-auto items-center">
               <div className="text-center">
                 <Image
                   src="https://i.imgur.com/lL4zY6f.png"

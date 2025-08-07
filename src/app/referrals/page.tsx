@@ -1,12 +1,29 @@
+'use client'
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Phone, MapPin } from "lucide-react"
+import { Phone, MapPin, Menu, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useState } from "react"
 
 export default function ReferralsPage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [charCount, setCharCount] = useState(0);
+  const [contactMethod, setContactMethod] = useState("");
+  const [showTextConsent, setShowTextConsent] = useState(false);
+  
+  const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCharCount(e.target.value.length);
+  };
+  
+  const handleContactMethodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const method = e.target.value;
+    setContactMethod(method);
+    setShowTextConsent(method === "Text");
+  };
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -27,6 +44,7 @@ export default function ReferralsPage() {
                 Glass House
               </Link>
             </div>
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
               <Link href="/about" className="text-muted-foreground hover:text-foreground">About</Link>
               <Link href="/programs" className="text-muted-foreground hover:text-foreground">Programs</Link>
@@ -35,7 +53,72 @@ export default function ReferralsPage() {
               <Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
               <Link href="/newsletter" className="text-muted-foreground hover:text-foreground">Newsletter</Link>
             </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2 rounded-md hover:bg-accent"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle mobile menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
           </div>
+
+          {/* Mobile Navigation Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden absolute top-16 left-0 right-0 bg-background/95 backdrop-blur border-t border-border z-50">
+              <nav className="container mx-auto px-5 py-4">
+                <div className="flex flex-col space-y-4">
+                  <Link 
+                    href="/about" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    About
+                  </Link>
+                  <Link 
+                    href="/programs" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Programs
+                  </Link>
+                  <Link 
+                    href="/admissions" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Admissions
+                  </Link>
+                  <Link 
+                    href="/referrals" 
+                    className="text-primary py-2 px-4 rounded-md bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Referrals
+                  </Link>
+                  <Link 
+                    href="/contact" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Contact
+                  </Link>
+                  <Link 
+                    href="/newsletter" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Newsletter
+                  </Link>
+                </div>
+              </nav>
+            </div>
+          )}
         </div>
       </header>
 
@@ -137,7 +220,7 @@ export default function ReferralsPage() {
 
                   <CardContent className="space-y-6 pt-6">
                     <div id="gh-form-container">
-                      <form className="space-y-4 gh-intake-form-2">
+                      <form className="space-y-4 gh-intake-form-2" method="post" action="#">
                         <div className="space-y-2">
                           <Label htmlFor="referrer-name">Your Name</Label>
                           <Input
@@ -195,9 +278,9 @@ export default function ReferralsPage() {
                             className="w-full min-h-[120px] p-3 border border-input bg-background rounded-md text-sm"
                             maxLength={500}
                             rows="4"
-                            onInput="document.getElementById('charCount').textContent = `${this.value.length}/500`"
+                            onChange={handleMessageChange}
                           />
-                          <div id="charCount" className="text-xs text-muted-foreground text-right">0/500</div>
+                          <div className="text-xs text-muted-foreground text-right">{charCount}/500</div>
                         </div>
 
                         <div className="space-y-2">
@@ -207,7 +290,8 @@ export default function ReferralsPage() {
                             id="contact-method"
                             required
                             className="w-full p-3 border border-input bg-background rounded-md text-sm"
-                            onchange="handleContactMethodChange()"
+                            value={contactMethod}
+                            onChange={handleContactMethodChange}
                           >
                             <option value="">Select Method</option>
                             <option value="Call">Call</option>
@@ -216,7 +300,7 @@ export default function ReferralsPage() {
                           </select>
                         </div>
 
-                        <div className="hidden" id="textConsentContainer">
+                        <div className={showTextConsent ? "" : "hidden"} id="textConsentContainer">
                           <div className="flex items-center space-x-2">
                             <input
                               type="checkbox"
@@ -224,6 +308,7 @@ export default function ReferralsPage() {
                               value="Yes"
                               id="textConsentCheckbox"
                               className="rounded"
+                              required={showTextConsent}
                             />
                             <Label htmlFor="textConsentCheckbox" className="text-sm">
                               By checking this box, I consent to receive transactional messages related to my account or services I have requested. These messages may include reminders related to appointments, confirmations, and notifications among others. Message frequency may vary. Message & Data rates may apply. Reply HELP for help or STOP to opt-out.
@@ -254,33 +339,7 @@ export default function ReferralsPage() {
                   __html: `
                     const GH_ENDPOINT_2 = 'https://script.google.com/macros/s/AKfycbyLCs-lG02lCPjJhMV_i8_fJEpMMhGJmGOnxHCbz35aHKhI__nBHEpGqn8FowJNZs_7/exec';
 
-                    document.addEventListener('DOMContentLoaded', function() {
-                      const textarea = document.getElementById('comments');
-                      const charCount = document.getElementById('charCount');
-
-                      if (textarea && charCount) {
-                        textarea.addEventListener('input', function() {
-                          charCount.textContent = textarea.value.length + '/500';
-                        });
-                      }
-
-                      const contactSelect = document.getElementById('contact-method');
-                      if (contactSelect) {
-                        contactSelect.addEventListener('change', function() {
-                          const method = this.value;
-                          const checkboxContainer = document.getElementById("textConsentContainer");
-                          const checkbox = document.getElementById("textConsentCheckbox");
-                          if (method === "Text") {
-                            checkboxContainer.classList.remove("hidden");
-                            checkbox.required = true;
-                          } else {
-                            checkboxContainer.classList.add("hidden");
-                            checkbox.required = false;
-                            checkbox.checked = false;
-                          }
-                        });
-                      }
-                    });
+                    // DOM-based functionality now handled by React state
 
                     document.querySelectorAll('.gh-intake-form-2').forEach(form => {
                       form.addEventListener('submit', async e => {

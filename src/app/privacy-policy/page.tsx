@@ -1,12 +1,16 @@
+'use client'
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ContactForm } from "@/components/ContactForm"
-import { Phone, Mail, MapPin, ArrowLeft } from "lucide-react"
+import { Phone, Mail, MapPin, ArrowLeft, Menu, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { useState } from "react"
 
 // Privacy Policy Page Component
 export default function PrivacyPolicyPage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -27,6 +31,7 @@ export default function PrivacyPolicyPage() {
                 Glass House
               </Link>
             </div>
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
               <Link href="/about" className="text-muted-foreground hover:text-foreground">About</Link>
               <Link href="/programs" className="text-muted-foreground hover:text-foreground">Programs</Link>
@@ -35,7 +40,72 @@ export default function PrivacyPolicyPage() {
               <Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
               <Link href="/newsletter" className="text-muted-foreground hover:text-foreground">Newsletter</Link>
             </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2 rounded-md hover:bg-accent"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle mobile menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
           </div>
+
+          {/* Mobile Navigation Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden absolute top-16 left-0 right-0 bg-background/95 backdrop-blur border-t border-border z-50">
+              <nav className="container mx-auto px-5 py-4">
+                <div className="flex flex-col space-y-4">
+                  <Link 
+                    href="/about" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    About
+                  </Link>
+                  <Link 
+                    href="/programs" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Programs
+                  </Link>
+                  <Link 
+                    href="/admissions" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Admissions
+                  </Link>
+                  <Link 
+                    href="/referrals" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Referrals
+                  </Link>
+                  <Link 
+                    href="/contact" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Contact
+                  </Link>
+                  <Link 
+                    href="/newsletter" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Newsletter
+                  </Link>
+                </div>
+              </nav>
+            </div>
+          )}
         </div>
       </header>
 
