@@ -4,6 +4,7 @@ import { ContactForm } from "@/components/ContactForm"
 import { Phone, Mail, MapPin, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { FacebookIcon, InstagramIcon, LinkedInIcon, SocialLink } from "@/components/SocialIcons"
 
 // Privacy Policy Page Component
 export default function PrivacyPolicyPage() {
@@ -274,16 +275,22 @@ export default function PrivacyPolicyPage() {
                 <Button className="mb-4" asChild>
                   <a href="/contact">SUBSCRIBE TO NEWSLETTER</a>
                 </Button>
-                <div className="flex justify-center space-x-4 text-sm">
-                  <a href="https://www.facebook.com/glasshouserecovery/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-                    Facebook
-                  </a>
-                  <a href="https://www.instagram.com/glasshouserecovery/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-                    Instagram
-                  </a>
-                  <a href="https://www.linkedin.com/company/glasshouserecovery/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-                    LinkedIn
-                  </a>
+                <div className="flex justify-center space-x-3">
+                  <SocialLink 
+                    href="https://www.facebook.com/glasshouserecovery/" 
+                    icon={<FacebookIcon size={18} />} 
+                    label="Facebook" 
+                  />
+                  <SocialLink 
+                    href="https://www.instagram.com/glasshouserecovery/" 
+                    icon={<InstagramIcon size={18} />} 
+                    label="Instagram" 
+                  />
+                  <SocialLink 
+                    href="https://www.linkedin.com/company/glasshouserecovery/" 
+                    icon={<LinkedInIcon size={18} />} 
+                    label="LinkedIn" 
+                  />
                 </div>
               </div>
             </div>

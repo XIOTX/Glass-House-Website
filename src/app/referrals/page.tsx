@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label"
 import { Phone, MapPin } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { FacebookIcon, InstagramIcon, LinkedInIcon, SocialLink } from "@/components/SocialIcons"
 
 export default function ReferralsPage() {
   return (
@@ -358,16 +359,22 @@ export default function ReferralsPage() {
                 <Button className="mb-4" asChild>
                   <Link href="/contact">SUBSCRIBE TO NEWSLETTER</Link>
                 </Button>
-                <div className="flex justify-center space-x-4 text-sm">
-                  <a href="https://www.facebook.com/glasshouserecovery/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-                    Facebook
-                  </a>
-                  <a href="https://www.instagram.com/glasshouserecovery/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-                    Instagram
-                  </a>
-                  <a href="https://www.linkedin.com/company/glasshouserecovery/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-                    LinkedIn
-                  </a>
+                <div className="flex justify-center space-x-3">
+                  <SocialLink 
+                    href="https://www.facebook.com/glasshouserecovery/" 
+                    icon={<FacebookIcon size={18} />} 
+                    label="Facebook" 
+                  />
+                  <SocialLink 
+                    href="https://www.instagram.com/glasshouserecovery/" 
+                    icon={<InstagramIcon size={18} />} 
+                    label="Instagram" 
+                  />
+                  <SocialLink 
+                    href="https://www.linkedin.com/company/glasshouserecovery/" 
+                    icon={<LinkedInIcon size={18} />} 
+                    label="LinkedIn" 
+                  />
                 </div>
               </div>
             </div>

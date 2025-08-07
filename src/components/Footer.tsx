@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Phone, Mail, MapPin } from "lucide-react"
 import Link from "next/link"
+import { FacebookIcon, InstagramIcon, LinkedInIcon, SocialLink } from "@/components/SocialIcons"
 export default function Footer() {
   return (
     <footer className="bg-background">
@@ -29,16 +30,22 @@ export default function Footer() {
               <Button className="mb-4" asChild>
                 <Link href="/#contact">SUBSCRIBE TO NEWSLETTER</Link>
               </Button>
-              <div className="flex justify-center md:justify-end space-x-4 text-sm">
-                <a href="https://www.facebook.com/glasshouserecovery" className="text-muted-foreground hover:text-foreground">
-                  Facebook
-                </a>
-                <a href="https://www.instagram.com/glasshouserecovery/" className="text-muted-foreground hover:text-foreground">
-                  Instagram
-                </a>
-                <a href="https://www.linkedin.com/company/glasshouserecovery/" className="text-muted-foreground hover:text-foreground">
-                  LinkedIn
-                </a>
+              <div className="flex justify-center md:justify-end space-x-3">
+                <SocialLink 
+                  href="https://www.facebook.com/glasshouserecovery/" 
+                  icon={<FacebookIcon size={18} />} 
+                  label="Facebook" 
+                />
+                <SocialLink 
+                  href="https://www.instagram.com/glasshouserecovery/" 
+                  icon={<InstagramIcon size={18} />} 
+                  label="Instagram" 
+                />
+                <SocialLink 
+                  href="https://www.linkedin.com/company/glasshouserecovery/" 
+                  icon={<LinkedInIcon size={18} />} 
+                  label="LinkedIn" 
+                />
               </div>
             </div>
           </div>
