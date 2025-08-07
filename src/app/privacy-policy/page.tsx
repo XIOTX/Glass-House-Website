@@ -4,7 +4,7 @@ import { ContactForm } from "@/components/ContactForm"
 import { Phone, Mail, MapPin, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { FacebookIcon, InstagramIcon, LinkedInIcon, SocialLink } from "@/components/SocialIcons"
+import { FacebookIcon, InstagramIcon, LinkedInIcon, YouTubeIcon, TikTokIcon, SocialLink } from "@/components/SocialIcons"
 
 // Privacy Policy Page Component
 export default function PrivacyPolicyPage() {
@@ -275,21 +275,31 @@ export default function PrivacyPolicyPage() {
                 <Button className="mb-4" asChild>
                   <a href="/contact">SUBSCRIBE TO NEWSLETTER</a>
                 </Button>
-                <div className="flex justify-center space-x-3">
+                                <div className="flex justify-center space-x-3">
                   <SocialLink 
                     href="https://www.facebook.com/glasshouserecovery/" 
-                    icon={<FacebookIcon size={18} />} 
-                    label="Facebook" 
+                    icon={<FacebookIcon size={22} />} 
+                    label="Facebook"
                   />
                   <SocialLink 
                     href="https://www.instagram.com/glasshouserecovery/" 
-                    icon={<InstagramIcon size={18} />} 
-                    label="Instagram" 
+                    icon={<InstagramIcon size={22} />} 
+                    label="Instagram"
                   />
                   <SocialLink 
                     href="https://www.linkedin.com/company/glasshouserecovery/" 
-                    icon={<LinkedInIcon size={18} />} 
-                    label="LinkedIn" 
+                    icon={<LinkedInIcon size={22} />} 
+                    label="LinkedIn"
+                  />
+                  <SocialLink 
+                    href="https://www.youtube.com/@glasshouserecovery" 
+                    icon={<YouTubeIcon size={22} />} 
+                    label="YouTube"
+                  />
+                  <SocialLink 
+                    href="https://www.tiktok.com/@glasshouserecovery" 
+                    icon={<TikTokIcon size={22} />} 
+                    label="TikTok"
                   />
                 </div>
               </div>

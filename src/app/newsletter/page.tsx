@@ -6,7 +6,7 @@ import { Phone, Mail, MapPin, ChevronDown, ChevronRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
-import { FacebookIcon, InstagramIcon, LinkedInIcon, SocialLink } from "@/components/SocialIcons"
+import { FacebookIcon, InstagramIcon, LinkedInIcon, YouTubeIcon, TikTokIcon, SocialLink } from "@/components/SocialIcons"
 
 // Newsletter data structure
 interface NewsletterEntry {
@@ -416,21 +416,31 @@ export default function NewsletterPage() {
                 <Button className="mb-4" asChild>
                   <a href="/contact">SUBSCRIBE TO NEWSLETTER</a>
                 </Button>
-                <div className="flex justify-center space-x-3">
+                                <div className="flex justify-center space-x-3">
                   <SocialLink 
                     href="https://www.facebook.com/glasshouserecovery/" 
-                    icon={<FacebookIcon size={18} />} 
-                    label="Facebook" 
+                    icon={<FacebookIcon size={22} />} 
+                    label="Facebook"
                   />
                   <SocialLink 
                     href="https://www.instagram.com/glasshouserecovery/" 
-                    icon={<InstagramIcon size={18} />} 
-                    label="Instagram" 
+                    icon={<InstagramIcon size={22} />} 
+                    label="Instagram"
                   />
                   <SocialLink 
                     href="https://www.linkedin.com/company/glasshouserecovery/" 
-                    icon={<LinkedInIcon size={18} />} 
-                    label="LinkedIn" 
+                    icon={<LinkedInIcon size={22} />} 
+                    label="LinkedIn"
+                  />
+                  <SocialLink 
+                    href="https://www.youtube.com/@glasshouserecovery" 
+                    icon={<YouTubeIcon size={22} />} 
+                    label="YouTube"
+                  />
+                  <SocialLink 
+                    href="https://www.tiktok.com/@glasshouserecovery" 
+                    icon={<TikTokIcon size={22} />} 
+                    label="TikTok"
                   />
                 </div>
               </div>
