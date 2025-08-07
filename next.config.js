@@ -11,7 +11,8 @@ const nextConfig = {
       'i.imgur.com',
       'ext.same-assets.com',
       'www.viima.com',
-      'glasshouserecovery.com'
+      'glasshouserecovery.com',
+      'substack-post-media.s3.amazonaws.com'
     ],
     remotePatterns: [
       {
@@ -29,6 +30,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'glasshouserecovery.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'substack-post-media.s3.amazonaws.com',
       }
     ]
   }

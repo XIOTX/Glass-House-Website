@@ -168,6 +168,7 @@ export default function ReferralsPage() {
                             type="email"
                             placeholder="Email Address"
                             required
+                            pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
                             className="w-full"
                           />
                         </div>
@@ -180,6 +181,7 @@ export default function ReferralsPage() {
                             type="tel"
                             placeholder="Phone Number (10 digits)"
                             required
+                            pattern="\d{10}"
                             className="w-full"
                           />
                         </div>
@@ -192,6 +194,8 @@ export default function ReferralsPage() {
                             placeholder="Please provide any additional information that would be helpful..."
                             className="w-full min-h-[120px] p-3 border border-input bg-background rounded-md text-sm"
                             maxLength={500}
+                            rows="4"
+                            onInput="document.getElementById('charCount').textContent = `${this.value.length}/500`"
                           />
                           <div id="charCount" className="text-xs text-muted-foreground text-right">0/500</div>
                         </div>
@@ -203,6 +207,7 @@ export default function ReferralsPage() {
                             id="contact-method"
                             required
                             className="w-full p-3 border border-input bg-background rounded-md text-sm"
+                            onchange="handleContactMethodChange()"
                           >
                             <option value="">Select Method</option>
                             <option value="Call">Call</option>
@@ -221,12 +226,12 @@ export default function ReferralsPage() {
                               className="rounded"
                             />
                             <Label htmlFor="textConsentCheckbox" className="text-sm">
-                              By submitting your phone number, you agree to receive recurring automated marketing messages from Glass House. Msg & data rates may apply. Reply STOP to unsubscribe.
+                              By checking this box, I consent to receive transactional messages related to my account or services I have requested. These messages may include reminders related to appointments, confirmations, and notifications among others. Message frequency may vary. Message & Data rates may apply. Reply HELP for help or STOP to opt-out.
                             </Label>
                           </div>
                         </div>
 
-                        <input type="hidden" name="form_source" value="referral_form" />
+                        <input type="hidden" name="form_source" value="referral_form_page" />
 
                         <Button type="submit" className="w-full" size="lg">
                           Submit Referral
@@ -266,14 +271,12 @@ export default function ReferralsPage() {
                           const checkboxContainer = document.getElementById("textConsentContainer");
                           const checkbox = document.getElementById("textConsentCheckbox");
                           if (method === "Text") {
-                            checkboxContainer?.classList.remove("hidden");
-                            if (checkbox) checkbox.required = true;
+                            checkboxContainer.classList.remove("hidden");
+                            checkbox.required = true;
                           } else {
-                            checkboxContainer?.classList.add("hidden");
-                            if (checkbox) {
-                              checkbox.required = false;
-                              checkbox.checked = false;
-                            }
+                            checkboxContainer.classList.add("hidden");
+                            checkbox.required = false;
+                            checkbox.checked = false;
                           }
                         });
                       }
