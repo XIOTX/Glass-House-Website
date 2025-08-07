@@ -32,6 +32,21 @@ export default function HomePage() {
         { name: 'full', start: 0.7, end: 0.9 }
       ];
 
+      // Update logo container scale - starts at 50%, reaches 100% when full brightness is achieved
+      const logoContainer = document.querySelector('.logo-container') as HTMLElement;
+      if (logoContainer) {
+        let logoScale = 0.5; // Start at 50%
+        
+        if (scrollProgress >= 0.05 && scrollProgress <= 0.9) {
+          const scaleProgress = (scrollProgress - 0.05) / (0.9 - 0.05); // Same progression as brightness
+          logoScale = 0.5 + (scaleProgress * 0.5); // 50% to 100%
+        } else if (scrollProgress > 0.9) {
+          logoScale = 1.0; // Final scale at 100%
+        }
+        
+        logoContainer.style.transform = `scale(${logoScale})`;
+      }
+
       layers.forEach(layer => {
         const element = document.querySelector(`[data-section="${layer.name}"]`) as HTMLElement;
         if (!element) return;
@@ -238,6 +253,12 @@ export default function HomePage() {
         container.style.visibility = 'visible';
         container.style.transform = 'translateY(0px)';
         container.style.display = 'flex';
+      }
+
+      // Initialize logo container scale to 50%
+      const logoContainer = document.querySelector('.logo-container') as HTMLElement;
+      if (logoContainer) {
+        logoContainer.style.transform = 'scale(0.5)';
       }
 
       if (logoSection) {
