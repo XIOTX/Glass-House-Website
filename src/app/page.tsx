@@ -206,11 +206,15 @@ export default function HomePage() {
           document.body.style.overflow = 'auto';
           document.documentElement.style.overflow = 'auto';
           window.removeEventListener('wheel', handleWheel);
+          window.removeEventListener('touchstart', handleTouchStart);
+          window.removeEventListener('touchmove', handleTouchMove);
         }
       }
 
       requestAnimationFrame(animateTransition);
     }
+
+    let lastTouchY = 0;
 
     function handleWheel(e: WheelEvent) {
       if (transitionStarted) return; // Don't handle wheel during transition
@@ -221,6 +225,26 @@ export default function HomePage() {
       const progressIncrement = delta / (window.innerHeight * 1.8);
 
       animationProgress = Math.max(0, Math.min(1.6, animationProgress + progressIncrement)); // Extended to 1.6 for much more time with fully lit logo
+      updateLogoState(animationProgress);
+    }
+
+    function handleTouchStart(e: TouchEvent) {
+      if (transitionStarted) return;
+      lastTouchY = e.touches[0].clientY;
+    }
+
+    function handleTouchMove(e: TouchEvent) {
+      if (transitionStarted) return;
+
+      e.preventDefault();
+
+      const currentTouchY = e.touches[0].clientY;
+      const delta = lastTouchY - currentTouchY; // Inverted for natural scroll direction
+      lastTouchY = currentTouchY;
+
+      const progressIncrement = delta / (window.innerHeight * 1.8);
+
+      animationProgress = Math.max(0, Math.min(1.6, animationProgress + progressIncrement));
       updateLogoState(animationProgress);
     }
 
@@ -283,11 +307,15 @@ export default function HomePage() {
 
     if (!animationFinalized) {
       window.addEventListener('wheel', handleWheel, { passive: false });
+      window.addEventListener('touchstart', handleTouchStart, { passive: false });
+      window.addEventListener('touchmove', handleTouchMove, { passive: false });
       initializeAnimation();
     }
 
     return () => {
       window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
     };
   }, [animationFinalized]);
 
