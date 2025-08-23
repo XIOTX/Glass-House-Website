@@ -485,7 +485,7 @@ export default function HomePage() {
       </section>
 
       <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-16" style={{display: 'none'}}>
-        <div className="container mx-auto px-5">
+        <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-1">
               <Link href="/">
