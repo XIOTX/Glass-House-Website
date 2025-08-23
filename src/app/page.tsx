@@ -597,7 +597,7 @@ export default function HomePage() {
           <div className="flex-col md:flex-row flex items-start md:justify-between mb-8 md:mb-02">
             <div className="md:w-1/2">
               <h1 className="text-4xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 mb-4 -mt-2">
-                GLASS HOUSE RECOVERY
+                GLASS HOUSE
               </h1>
               <div className="mb-0">
                 <span className="text-lg text-muted-foreground">Creative Outpatient Treatment</span>
