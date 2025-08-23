@@ -15,10 +15,9 @@ export default function HomePage() {
   const [skipAnimation, setSkipAnimation] = useState(false);
 
   useEffect(() => {
-    // Check if animation has already played in this session or if we should skip it
-    const hasPlayedAnimation = sessionStorage.getItem('ghAnimationPlayed');
+    // Check if we should skip animation (only when coming from logo/brand links)
     const urlParams = new URLSearchParams(window.location.search);
-    const shouldSkip = urlParams.get('skip') === 'true' || hasPlayedAnimation === 'true';
+    const shouldSkip = urlParams.get('skip') === 'true';
     
     if (shouldSkip) {
       setSkipAnimation(true);
@@ -33,11 +32,12 @@ export default function HomePage() {
       if (logoSection) {
         logoSection.style.display = 'none';
       }
+      // Clean up the URL parameter
+      window.history.replaceState({}, document.title, window.location.pathname);
       return;
     }
 
-    // Mark that animation will play in this session
-    sessionStorage.setItem('ghAnimationPlayed', 'true');
+    // Animation will play (either first visit or refresh)
     const container = document.querySelector('.logo-reveal-container') as HTMLElement;
     const logoSections = document.querySelectorAll('.logo-layer:not(.logo-base)');
     const header = document.querySelector('header') as HTMLElement;
