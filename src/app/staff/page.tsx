@@ -200,7 +200,7 @@ export default function StaffPage() {
               src="https://glasshouserecovery.com/wp-content/uploads/2025/08/pexels-cottonbro-6830875-scaled.jpg"
               alt="Professional team meeting - Glass House Recovery staff"
               fill
-              className="object-cover grayscale blur-[3px]"
+              className="object-cover grayscale blur-[2px]"
               priority
             />
             <div className="absolute inset-0 bg-black/20" />
