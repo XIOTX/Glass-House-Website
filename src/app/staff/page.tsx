@@ -192,16 +192,28 @@ export default function StaffPage() {
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* Hero Section with Image */}
       <section className="container mx-auto px-5">
         <div className="mb-8 md:mb-16 mt-8">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight mb-6">
-              Our Expert Team
-            </h1>
-            <p className="text-xl md:text-2xl leading-relaxed text-muted-foreground mb-8">
-              Meet the experienced professionals dedicated to your recovery and mental health journey at Glass House Recovery.
-            </p>
+          <div className="relative w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden">
+            <Image
+              src="https://glasshouserecovery.com/wp-content/uploads/2025/08/pexels-cottonbro-6830875-scaled.jpg"
+              alt="Professional team meeting - Glass House Recovery staff"
+              fill
+              className="object-cover grayscale"
+              priority
+            />
+            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center text-white px-4 max-w-4xl">
+                <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight mb-6">
+                  Our Expert Team
+                </h1>
+                <p className="text-xl md:text-2xl leading-relaxed font-medium text-white/90">
+                  Meet the experienced professionals dedicated to your recovery and mental health journey at Glass House Recovery.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
