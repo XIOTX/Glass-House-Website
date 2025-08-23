@@ -113,7 +113,7 @@ export default function ProgramsPage() {
             <div className="relative w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden">
               <Image
                 src="https://ext.same-assets.com/2654951941/3166330094.jpeg"
-                alt="A new way of life"
+                alt="Creative therapy programs Baltimore - A new way of life at Glass House Recovery"
                 fill
                 className="object-cover filter grayscale"
                 priority
@@ -123,8 +123,11 @@ export default function ProgramsPage() {
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center text-white px-4 max-w-4xl">
                   <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight mb-6">
-                    A NEW WAY OF LIFE
+                    Therapy Programs for Men - Glass House Recovery Baltimore
                   </h1>
+                  <p className="text-xl md:text-2xl leading-relaxed font-medium text-white/90 mb-4">
+                    A NEW WAY OF LIFE
+                  </p>
                   <p className="text-xl md:text-2xl leading-relaxed font-semibold">
                     Glass House Recovery provides programs for many levels of care to help create a new path forward.
                   </p>

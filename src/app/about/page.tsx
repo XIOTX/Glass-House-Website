@@ -121,9 +121,12 @@ export default function AboutPage() {
               <div className="absolute inset-0 bg-black/40" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center text-white px-4 max-w-4xl">
-                  <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
-                    It's never too late to see what you could have been.
-                  </h1>
+                                  <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+                  About Glass House Recovery - Creative Therapy for Men in Baltimore
+                </h1>
+                <p className="text-xl md:text-2xl leading-relaxed font-medium text-white/90 mt-4">
+                  It's never too late to see what you could have been.
+                </p>
                 </div>
               </div>
             </div>

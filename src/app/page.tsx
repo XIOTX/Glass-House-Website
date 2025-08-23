@@ -1,5 +1,6 @@
 "use client"
 
+import { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ContactForm } from "@/components/ContactForm"
@@ -428,7 +429,7 @@ export default function HomePage() {
             <div className="logo-layer logo-base floating">
               <Image
                 src="/ghwt.png"
-                alt="Glass House Logo Base"
+                alt="Glass House Recovery Logo - Creative Therapy for Men Baltimore"
                 fill
                 className="object-contain"
                 priority
@@ -596,7 +597,7 @@ export default function HomePage() {
           <div className="flex-col md:flex-row flex items-start md:justify-between mb-8 md:mb-02">
             <div className="md:w-1/2">
               <h1 className="text-4xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8 mb-4 -mt-2">
-                GLASS HOUSE
+                GLASS HOUSE RECOVERY
               </h1>
               <div className="mb-0">
                 <span className="text-lg text-muted-foreground">Creative Outpatient Treatment</span>
@@ -630,7 +631,7 @@ export default function HomePage() {
               <div className="relative">
                 <Image
                   src="https://ext.same-assets.com/1711429588/1615094442.jpeg"
-                  alt="Vintage typewriter - Is it time to write a new chapter?"
+                  alt="Vintage typewriter representing new beginnings - Creative therapy Baltimore Glass House Recovery"
                   width={600}
                   height={400}
                   className="rounded-lg shadow-md"
