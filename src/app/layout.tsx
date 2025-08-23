@@ -163,6 +163,78 @@ export default function RootLayout({
             })
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Glass House Recovery",
+              "employee": [
+                {
+                  "@type": "Person",
+                  "name": "Dr. Sarah Johnson",
+                  "jobTitle": "Clinical Director & Licensed Psychologist",
+                  "hasCredential": [
+                    {
+                      "@type": "EducationalOccupationalCredential",
+                      "credentialCategory": "Ph.D. in Clinical Psychology"
+                    },
+                    {
+                      "@type": "EducationalOccupationalCredential", 
+                      "credentialCategory": "Licensed Clinical Social Worker (LCSW)"
+                    }
+                  ],
+                  "knowsAbout": ["Trauma Therapy", "Cognitive Behavioral Therapy", "Men's Mental Health", "Addiction Recovery"],
+                  "worksFor": {
+                    "@type": "Organization",
+                    "name": "Glass House Recovery"
+                  }
+                },
+                {
+                  "@type": "Person",
+                  "name": "Dr. James Chen",
+                  "jobTitle": "Addiction Specialist & Psychiatrist",
+                  "hasCredential": [
+                    {
+                      "@type": "EducationalOccupationalCredential",
+                      "credentialCategory": "M.D."
+                    },
+                    {
+                      "@type": "EducationalOccupationalCredential",
+                      "credentialCategory": "Board Certified Psychiatrist"
+                    }
+                  ],
+                  "knowsAbout": ["Addiction Medicine", "Dual Diagnosis", "Medication Management", "Substance Abuse"],
+                  "worksFor": {
+                    "@type": "Organization",
+                    "name": "Glass House Recovery"
+                  }
+                },
+                {
+                  "@type": "Person",
+                  "name": "Michael Rodriguez",
+                  "jobTitle": "Lead Creative Therapist & Music Therapy Specialist",
+                  "hasCredential": [
+                    {
+                      "@type": "EducationalOccupationalCredential",
+                      "credentialCategory": "Board Certified Music Therapist (MT-BC)"
+                    },
+                    {
+                      "@type": "EducationalOccupationalCredential",
+                      "credentialCategory": "Licensed Creative Arts Therapist (LCAT)"
+                    }
+                  ],
+                  "knowsAbout": ["Music Therapy", "Art Therapy", "Creative Expression", "Group Therapy"],
+                  "worksFor": {
+                    "@type": "Organization",
+                    "name": "Glass House Recovery"
+                  }
+                }
+              ]
+            })
+          }}
+        />
       </head>
       <body suppressHydrationWarning className="antialiased">
         <ClientBody>{children}</ClientBody>
