@@ -12,8 +12,32 @@ import { useEffect, useState } from "react"
 export default function HomePage() {
   const [animationFinalized, setAnimationFinalized] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [skipAnimation, setSkipAnimation] = useState(false);
 
   useEffect(() => {
+    // Check if animation has already played in this session or if we should skip it
+    const hasPlayedAnimation = sessionStorage.getItem('ghAnimationPlayed');
+    const urlParams = new URLSearchParams(window.location.search);
+    const shouldSkip = urlParams.get('skip') === 'true' || hasPlayedAnimation === 'true';
+    
+    if (shouldSkip) {
+      setSkipAnimation(true);
+      setAnimationFinalized(true);
+      // Show the header immediately
+      const header = document.querySelector('header') as HTMLElement;
+      if (header) {
+        header.style.display = 'block';
+      }
+      // Hide the animation section
+      const logoSection = document.querySelector('.logo-reveal-section') as HTMLElement;
+      if (logoSection) {
+        logoSection.style.display = 'none';
+      }
+      return;
+    }
+
+    // Mark that animation will play in this session
+    sessionStorage.setItem('ghAnimationPlayed', 'true');
     const container = document.querySelector('.logo-reveal-container') as HTMLElement;
     const logoSections = document.querySelectorAll('.logo-layer:not(.logo-base)');
     const header = document.querySelector('header') as HTMLElement;
@@ -488,7 +512,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-1">
-              <Link href="/">
+              <Link href="/?skip=true">
                 <Image
                   src="/glass-house-logo.png"
                   alt="Glass House Recovery Logo"
@@ -497,7 +521,7 @@ export default function HomePage() {
                   className="h-10 w-auto"
                 />
               </Link>
-              <Link href="/" className="text-2xl font-bold tracking-tighter">
+              <Link href="/?skip=true" className="text-2xl font-bold tracking-tighter">
                 Glass House
               </Link>
             </div>

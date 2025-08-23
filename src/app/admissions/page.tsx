@@ -15,7 +15,7 @@ export default function AdmissionsPage() {
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-1">
-              <Link href="/">
+              <Link href="/?skip=true">
                 <Image
                   src="/glass-house-logo.png"
                   alt="Glass House Recovery Logo"
@@ -24,7 +24,7 @@ export default function AdmissionsPage() {
                   className="h-10 w-auto"
                 />
               </Link>
-              <Link href="/" className="text-2xl font-bold tracking-tighter">
+              <Link href="/?skip=true" className="text-2xl font-bold tracking-tighter">
                 Glass House
               </Link>
             </div>
