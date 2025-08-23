@@ -260,7 +260,7 @@ export default function ContactPage() {
                             placeholder="Let us know how we can help..."
                             className="w-full min-h-[120px] p-3 border border-input bg-background rounded-md text-sm"
                             maxLength={500}
-                            rows="4"
+                            rows={4}
                             onChange={handleMessageChange}
                           />
                           <div className="text-xs text-muted-foreground text-right">{charCount}/500</div>
