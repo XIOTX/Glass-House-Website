@@ -213,6 +213,7 @@ export default function FAQPage() {
               <Link href="/about" className="text-muted-foreground hover:text-foreground">About</Link>
               <Link href="/programs" className="text-muted-foreground hover:text-foreground">Programs</Link>
               <Link href="/admissions" className="text-muted-foreground hover:text-foreground">Admissions</Link>
+              <Link href="/staff" className="text-muted-foreground hover:text-foreground">Staff</Link>
               <Link href="/referrals" className="text-muted-foreground hover:text-foreground">Referrals</Link>
               <Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
               <Link href="/newsletter" className="text-muted-foreground hover:text-foreground">Newsletter</Link>
@@ -235,6 +236,7 @@ export default function FAQPage() {
                 <Link href="/about" className="text-muted-foreground hover:text-foreground px-2 py-1">About</Link>
                 <Link href="/programs" className="text-muted-foreground hover:text-foreground px-2 py-1">Programs</Link>
                 <Link href="/admissions" className="text-muted-foreground hover:text-foreground px-2 py-1">Admissions</Link>
+                <Link href="/staff" className="text-muted-foreground hover:text-foreground px-2 py-1">Staff</Link>
                 <Link href="/referrals" className="text-muted-foreground hover:text-foreground px-2 py-1">Referrals</Link>
                 <Link href="/contact" className="text-muted-foreground hover:text-foreground px-2 py-1">Contact</Link>
                 <Link href="/newsletter" className="text-muted-foreground hover:text-foreground px-2 py-1">Newsletter</Link>
