@@ -36,6 +36,7 @@ export default function AboutPage() {
               <Link href="/referrals" className="text-muted-foreground hover:text-foreground">Referrals</Link>
               <Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
               <Link href="/newsletter" className="text-muted-foreground hover:text-foreground">Newsletter</Link>
+              <Link href="/faq" className="text-muted-foreground hover:text-foreground">FAQ</Link>
             </nav>
 
             {/* Mobile Menu Button */}

@@ -510,6 +510,7 @@ export default function HomePage() {
               <Link href="/referrals" className="text-muted-foreground hover:text-foreground">Referrals</Link>
               <Link href="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
               <Link href="/newsletter" className="text-muted-foreground hover:text-foreground">Newsletter</Link>
+              <Link href="/faq" className="text-muted-foreground hover:text-foreground">FAQ</Link>
             </nav>
 
             {/* Mobile Menu Button */}
@@ -572,6 +573,13 @@ export default function HomePage() {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Newsletter
+                  </Link>
+                  <Link 
+                    href="/faq" 
+                    className="text-foreground hover:text-primary py-2 px-4 rounded-md hover:bg-accent transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    FAQ
                   </Link>
                 </div>
               </nav>
